@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Controle Avançado de Horas Extras</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --primary: #38bdf8;
+      --ok: #22c55e;      /* até 4h */
+      --warn: #facc15;    /* até 8h */
+      --purple: #a855f7;  /* 12h */
+      --danger: #ef4444;  /* >12h */
+      --night: #0ea5e9;
+      --day: #f97316;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+    }
+
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: var(--text);
+      padding: 20px;
+    }
+
+    h1 { margin-bottom: 5px; }
+    p { color: var(--muted); margin-top: 0; }
+
+    .top-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .progress {
+      background: #020617;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 22px;
+      margin: 10px 0;
+    }
+
+    .progress-bar {
+      height: 100%;
+      transition: width 0.4s ease;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .day {
+      background: #020617;
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .day:hover { border-color: var(--primary); }
+
+    .low { background: rgba(34,197,94,0.2); }
+    .medium { background: rgba(250,204,21,0.25); }
+    .twelve { background: rgba(168,85,247,0.3); }
+    .high { background: rgba(239,68,68,0.3); }
+
+    .badge {
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-top: 4px;
+      width: fit-content;
+    }
+
+    .daytime { background: var(--day); }
+    .nighttime { background: var(--night); }
+
+    dialog {
+      border: none;
+      border-radius: 12px;
+      padding: 20px;
+      background: var(--card);
+      color: var(--text);
+      width: 280px;
+    }
+
+    dialog input, dialog select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    dialog button {
+      margin-top: 12px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      background: var(--primary);
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+
+</head>
+<body>
+  <h1>Controle de Horas Extras</h1>
+<p>Limite mensal: <strong>120 horas</strong></p>
+  <div class="top-controls">
+    <select id="month"></select>
+    <select id="year"></select>
+    
+  </div>
+
+  <div class="dashboard">
+    <div class="card">
+      <h3>Resumo do Mês</h3>
+      <p>Total: <strong id="total">0</strong> h</p>
+      <p>Diurna: <strong id="dayTotal">0</strong> h</p>
+      <p>Noturna: <strong id="nightTotal">0</strong> h</p>
+      <p>Restante: <strong id="remaining">120</strong> h</p>
+      <div class="progress"><div id="bar" class="progress-bar"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>Calendário</h3>
+      <div class="calendar" id="calendar"></div>
+    </div>
+  </div>
+
+  <dialog id="modal">
+    <h3>Horas Extras</h3>
+    <p id="modalDay"></p>
+    <input type="number" id="hoursInput" min="0" max="24" placeholder="Horas" />
+    <select id="typeInput">
+      <option value="day">Diurna</option>
+      <option value="night">Noturna</option>
+    </select>
+    <button onclick="saveHours()">Salvar</button>
+  </dialog>
+
+  <script>
+    const calendar = document.getElementById('calendar');
+    const modal = document.getElementById('modal');
+    const modalDay = document.getElementById('modalDay');
+    const hoursInput = document.getElementById('hoursInput');
+    const typeInput = document.getElementById('typeInput');
+    const totalEl = document.getElementById('total');
+    const dayTotalEl = document.getElementById('dayTotal');
+    const nightTotalEl = document.getElementById('nightTotal');
+    const remainingEl = document.getElementById('remaining');
+    const bar = document.getElementById('bar');
+    const monthSelect = document.getElementById('month');
+    const yearSelect = document.getElementById('year');
+
+    const MAX_HOURS = 120;
+    let selectedDay;
+    let data = JSON.parse(localStorage.getItem('extraHoursAdvanced')) || {};
+
+    function initDateSelectors() {
+      const now = new Date();
+      for (let m = 0; m < 12; m++) {
+        monthSelect.innerHTML += `<option value="${m}">${new Date(0, m).toLocaleString('pt-BR', { month: 'long' })}</option>`;
+      }
+      for (let y = now.getFullYear() - 2; y <= now.getFullYear() + 2; y++) {
+        yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+      }
+      monthSelect.value = now.getMonth();
+      yearSelect.value = now.getFullYear();
+    }
+
+    function key() {
+      return `${yearSelect.value}-${monthSelect.value}`;
+    }
+
+    function daysInMonth() {
+      return new Date(yearSelect.value, Number(monthSelect.value) + 1, 0).getDate();
+    }
+
+    function renderCalendar() {
+      calendar.innerHTML = '';
+      const k = key();
+      if (!data[k]) data[k] = {};
+
+      for (let i = 1; i <= daysInMonth(); i++) {
+        const entry = data[k][i] || { h: 0, t: 'day' };
+        const d = document.createElement('div');
+        d.className = 'day';
+
+        if (entry.h > 0 && entry.h <= 4) d.classList.add('low');
+        else if (entry.h <= 8) d.classList.add('medium');
+        else if (entry.h === 12) d.classList.add('twelve');
+        else if (entry.h > 12) d.classList.add('high');
+
+        d.innerHTML = `<div>Dia ${i}</div>
+          <div>${entry.h} h</div>
+          ${entry.h ? `<span class="badge ${entry.t === 'night' ? 'nighttime' : 'daytime'}">${entry.t === 'night' ? 'Noturna' : 'Diurna'}</span>` : ''}`;
+
+        d.onclick = () => openModal(i);
+        calendar.appendChild(d);
+      }
+      updateSummary();
+    }
+
+    function openModal(day) {
+      selectedDay = day;
+      const entry = data[key()][day] || { h: 0, t: 'day' };
+      modalDay.textContent = `Dia ${day}`;
+      hoursInput.value = entry.h;
+      typeInput.value = entry.t;
+      modal.showModal();
+    }
+
+    function saveHours() {
+      data[key()][selectedDay] = { h: Number(hoursInput.value), t: typeInput.value };
+      localStorage.setItem('extraHoursAdvanced', JSON.stringify(data));
+      modal.close();
+      renderCalendar();
+    }
+
+    function updateSummary() {
+      const entries = Object.values(data[key()] || {});
+      let total = 0, dayT = 0, nightT = 0;
+      entries.forEach(e => {
+        total += e.h;
+        e.t === 'night' ? nightT += e.h : dayT += e.h;
+      });
+      totalEl.textContent = total;
+      dayTotalEl.textContent = dayT;
+      nightTotalEl.textContent = nightT;
+      remainingEl.textContent = Math.max(0, MAX_HOURS - total);
+      const pct = Math.min(100, (total / MAX_HOURS) * 100);
+      bar.style.width = pct + '%';
+      bar.style.background = pct < 70 ? 'var(--ok)' : pct < 100 ? 'var(--warn)' : 'var(--danger)';
+    }
+
+    monthSelect.onchange = yearSelect.onchange = renderCalendar;
+    initDateSelectors();
+    renderCalendar();
+  </script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
+    .then(() => console.log('PWA ativo'))
+    .catch(err => console.error('Erro no SW', err));
+}
+</script>
+
+</body>
+</html>

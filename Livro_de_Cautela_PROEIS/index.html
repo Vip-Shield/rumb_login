@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Livro de Cautela Permanente - RUMB</title>
+
+<style>
+
+.header {
+  display: grid;
+  grid-template-columns: 80px 1fr 80px;
+  align-items: center;
+  border-bottom: 2px solid #1f3c88;
+  padding-bottom: 10px;
+}
+
+.logo-esq img {
+  width: 65px;
+}
+
+.logo-dir img {
+  width: 65px;
+}
+
+.titulo h1 {
+  text-align: center;
+  font-size: 20px;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0d1b2a;
+  color: #fff;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form, table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+input, select {
+  width: 100%;
+  padding: 6px;
+  margin: 4px 0;
+}
+
+button {
+  padding: 10px;
+  background: #1b9aaa;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #147a85;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+th, td {
+  border: 1px solid #555;
+  padding: 6px;
+  text-align: center;
+}
+
+th {
+  background: #1f3c88;
+}
+
+.entregue {
+  background: #14532d;
+}
+
+.cautelado {
+  background: #7c2d12;
+}
+
+
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 10px;
+  }
+
+  button, form {
+    display: none;
+  }
+
+  table {
+    font-size: 9px;
+  }
+
+  th {
+    background: #ddd !important;
+    color: black;
+  }
+
+  .header {
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 6px 10px;
+  margin-top: 20px;
+}
+
+.form-grid label {
+  text-align: right;
+  padding-top: 6px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.form-grid input {
+  padding: 6px;
+}
+
+.bloco {
+  grid-column: 1 / 3;
+  background: #1f3c88;
+  padding: 6px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo-esq">
+    <img src="caveira-dourada.png" alt="Caveira RUMB">
+  </div>
+
+  <div class="titulo">
+    <h1>LIVRO DE CAUTELA PROEIS – RUMB (UPP PAVÃO)</h1>
+  </div>
+
+  <div class="logo-dir">
+    <img src="pmerj.png" alt="PMERJ">
+  </div>
+</div>
+
+<form id="formCautela" class="form-grid">
+
+  <div class="bloco">IDENTIFICAÇÃO DO POLICIAL</div>
+
+  <label>GH</label><input placeholder="GH" required>
+  <label>RG</label><input placeholder="RG" required>
+  <label>Nome</label><input placeholder="Nome" required>
+  <label>Nome da Escala</label><input placeholder="Nome da Escala" required>
+
+  <div class="bloco">ARMAMENTO OU COLETE</div>
+
+  <label>Nº da Arma</label><input placeholder="Nº da Arma" required>
+  <label>Modelo</label><input placeholder="Modelo" required>
+  <label>Qtd. Munições</label><input type="number" placeholder="Qtd Munições" required>
+  <label>Qtd. Carregadores</label><input type="number" placeholder="Qtd Carregadores" required>
+
+  <div class="bloco">CONTROLE DE CAUTELA – RUMB</div>
+
+  <label>Data da Atividade</label><input type="date" required>
+  <label>Data da Cautela</label><input type="date" required>
+  <label>Hora da Cautela</label><input type="time" required>
+  <label>RUMB</label><input placeholder="Escreva seu nome aqui Quartilheiro" required>
+
+  <div></div>
+  <button type="submit">Registrar Cautela</button>
+<br>
+<button onclick="window.print()">🖨️ IMPRIMIR / GERAR PDF</button>
+</form>
+
+
+<button onclick="mostrarAbertas()">🔴 VER CAUTELAS EM ABERTO</button>
+<button onclick="render()">📘 VER TODAS</button>
+
+
+<table id="tabela">
+<thead>
+<tr>
+<th>GH</th><th>RG</th><th>Nome</th><th>Escala</th><th>Nº Arma</th><th>Modelo</th>
+<th>Munições</th><th>Carregadores</th>
+<th>Data Ativ.</th><th>Data Caut.</th><th>Hora Caut.</th>
+<th>Data Ent.</th><th>Hora Ent.</th><th>RUMB</th><th>RUMB ENTREGA</th>
+<th>Status</th><th>Ação</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<script>
+const escalaRUMB = [
+  { nome: "LACERDA", inicio: "2026-01-23T05:00", fim: "2026-01-23T17:00" },
+  { nome: "R. SIMÕES", inicio: "2026-01-23T17:00", fim: "2026-01-24T05:00" },
+
+  { nome: "ALACRINO", inicio: "2026-01-24T05:00", fim: "2026-01-24T17:00" },
+  { nome: "LACERDA", inicio: "2026-01-24T17:00", fim: "2026-01-25T05:00" },
+
+  { nome: "TRIUMPHO", inicio: "2026-01-25T05:00", fim: "2026-01-25T17:00" },
+  { nome: "ALACRINO", inicio: "2026-01-25T17:00", fim: "2026-01-26T05:00" },
+
+  { nome: "DAN", inicio: "2026-01-26T05:00", fim: "2026-01-26T17:00" },
+  { nome: "TRIUMPHO", inicio: "2026-01-26T17:00", fim: "2026-01-27T05:00" },
+
+  { nome: "R. SIMÕES", inicio: "2026-01-27T05:00", fim: "2026-01-27T17:00" },
+  { nome: "DAN", inicio: "2026-01-27T17:00", fim: "2026-01-28T05:00" }
+];
+
+function obterRUMBAtual() {
+  const agora = new Date();
+  const turno = escalaRUMB.find(e =>
+    agora >= new Date(e.inicio) && agora <= new Date(e.fim)
+  );
+  return turno ? turno.nome : "FORA DA ESCALA";
+}
+</script>
+
+
+<script>
+const form = document.getElementById("formCautela");
+const tabela = document.querySelector("#tabela tbody");
+
+let dados = JSON.parse(localStorage.getItem("livroCautela")) || [];
+
+function salvar() {
+  localStorage.setItem("livroCautela", JSON.stringify(dados));
+}
+
+function render() {
+  tabela.innerHTML = "";
+  dados.forEach((d, i) => {
+    const tr = document.createElement("tr");
+    tr.className = d.status;
+  tr.innerHTML = `
+<td>${d.gh}</td>
+<td>${d.rg}</td>
+<td>${d.nome}</td>
+<td>${d.escala}</td>
+<td>${d.arma}</td>
+<td>${d.modelo}</td>
+<td>${d.mun}</td>
+<td>${d.car}</td>
+<td>${d.dataAt}</td>
+<td>${d.dataC}</td>
+<td>${d.horaC}</td>
+<td>${d.dataE || ""}</td>
+<td>${d.horaE || ""}</td>
+<td>${d.rumb}</td>
+<td>${d.rumbEntrega || ""}</td>
+<td>${d.status}</td>
+
+<td>
+  ${d.status === "Cautelado"
+    ? `<button onclick="entregar(${i})">Entregar</button>`
+    : ""}
+</td>`;
+
+    tabela.appendChild(tr);
+  });
+}
+
+
+form.onsubmit = e => {
+  e.preventDefault();
+
+  const v = [...form.querySelectorAll("input")].map(i => i.value);
+
+  const existeAberta = dados.some(d =>
+    d.rg === v[1] && d.status === "Cautelado"
+  );
+
+  if (existeAberta) {
+    alert("ATENÇÃO: Este policial já possui cautela em aberto.");
+    return;
+  }
+
+  dados.push({
+    gh:v[0], rg:v[1], nome:v[2], escala:v[3],
+    arma:v[4], modelo:v[5], mun:v[6], car:v[7],
+    dataAt:v[8], dataC:v[9], horaC:v[10],
+    rumb:v[11], status:"Cautelado"
+  });
+
+  salvar();
+  render();
+  form.reset();
+};
+
+
+function entregar(i) {
+  const agora = new Date();
+
+  dados[i].dataE = agora.toLocaleDateString();
+  dados[i].horaE = agora.toLocaleTimeString().slice(0,5);
+  dados[i].rumbEntrega = obterRUMBAtual();
+  dados[i].status = "Entregue";
+
+  salvar();
+  render();
+}
+
+
+function mostrarAbertas() {
+  tabela.innerHTML = "";
+  dados
+    .filter(d => d.status === "Cautelado")
+    .forEach((d, i) => {
+      const tr = document.createElement("tr");
+      tr.className = "cautelado";
+      tr.innerHTML = `
+      <td>${d.gh}</td>
+      <td>${d.rg}</td>
+      <td>${d.nome}</td>
+      <td>${d.escala}</td>
+      <td>${d.arma}</td>
+      <td>${d.modelo}</td>
+      <td>${d.mun}</td>
+      <td>${d.car}</td>
+      <td>${d.dataAt}</td>
+      <td>${d.dataC}</td>
+      <td>${d.horaC}</td>
+      <td></td>
+      <td></td>
+      <td>${d.rumb}</td>
+      <td>${d.status}</td>
+      <td><button onclick="entregar(${i})">Entregar</button></td>`;
+      tabela.appendChild(tr);
+    });
+}
+
+</script>
+
+
+</body>
+</html>

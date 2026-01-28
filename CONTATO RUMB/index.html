@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTATO RUMB - UPP PAVÃO</title>
+    <style>
+        body { display: flex; flex-direction: column; align-items: center; background-color: #f0f0f0; margin: 0; font-family: Arial, sans-serif; gap: 20px; padding-bottom: 80px; }
+        header { background-color: #00a4e4; color: white; padding: 1rem; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        
+        .card { width: 400px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: #fff; text-align: center; border: 1px solid #ddd; margin-bottom: 10px; }
+        .card-plantao { border: 3px solid #00205b; background-color: #e3f2fd; position: relative; margin-top: 20px; }
+        .badge { background: #d32f2f; color: white; padding: 5px 15px; border-radius: 20px; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-weight: bold; font-size: 12px; }
+
+        .profile-pic { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; border: 3px solid #00205b; background: #eee; }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        
+        h2 { margin: 0; color: #333; }
+        strong { color: #00205b; }
+        .sap__cor__verde { color: #075e54; font-weight: bold; text-decoration: none; }
+        
+        .social-links { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .apresentacao__links__link { display: flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid #ccc; border-radius: 8px; padding: 12px; text-decoration: none; color: #333; font-weight: 600; }
+        .apresentacao__links__link img { width: 25px; }
+
+        .busca-container { background: #00205b; color: white; width: 400px; padding: 20px; border-radius: 15px; text-align: center; box-sizing: border-box; margin-top: 30px; }
+        .busca-container input { padding: 10px; width: 85%; border-radius: 5px; border: none; margin: 10px 0; font-size: 16px; text-align: center; }
+        .btn-busca { background: #00a4e4; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 85%; transition: 0.3s; }
+        #resultado-busca { margin-top: 15px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.1); min-height: 40px; display: none; }
+
+        .caveira { width: 60px; }
+        .whats { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+    </style>
+
+    <script>
+        document.oncontextmenu = () => false;
+        document.onkeydown = (e) => {
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false;
+        };
+    </script>
+</head>
+<body>
+
+    <header>
+        <img src="img/caveira-armada2.png" class="caveira">
+        <strong style="color: white;">CONTATOS da RUMB - 3ª CIA - UPP PAVÃO</strong>
+    </header>
+
+    <div id="container-plantao"></div>
+
+    <hr style="width: 80%; border: 0.5px solid #ccc; margin: 20px 0;">
+    <p style="color: #666; font-weight: bold;">TODOS OS CONTATOS</p>
+
+    <div id="lista-geral"></div>
+
+    <div class="busca-container">
+        <h3 style="margin-top: 0;">Previsão de Escala</h3>
+        <p style="font-size: 14px; opacity: 0.8;">Veja quem estará de serviço futuramente:</p>
+        <input type="datetime-local" id="data-consulta">
+        <button class="btn-busca" onclick="consultarEscala()">Verificar Quartilheiro</button>
+        <div id="resultado-busca"></div>
+    </div>
+
+    <div class="whats">
+        <a href="https://wa.me/5521964827877"><img src="img/whatsapp.png" width="70px" title="Falar com a RUMB"></a>
+    </div>
+
+    <script>
+        const db = {
+            triumpho: { posto: "SD PM", nome: "Triumpho", cel: "(21) 96484-4022", wa: "5521964844022", foto: "img/triumpho.png" },
+            simoes: { posto: "3º SGT PM", nome: "R. Simões", cel: "(21) 98253-9175", wa: "5521982539175", foto: "img/rodrigo.png" },
+            dan: { posto: "3º SGT PM", nome: "Dan", cel: "(21) 96482-7877", wa: "5521964827877", foto: "img/dan.png" },
+            lacerda: { posto: "3º SGT PM", nome: "Lacerda", cel: "(21) 96418-6198", wa: "5521964186198", foto: "img/lacerda.png" },
+            alacrino: { posto: "3º SGT PM", nome: "Alacrino", cel: "(21) 97393-5903", wa: "5521973935903", foto: "img/alacrino.png" }
+        };
+
+        // SEQUÊNCIA COMPLETA (Ciclo de 10 turnos de 12 horas)
+        const sequenciaEscala = [
+            db.dan,      // 0: 26/01 05h
+            db.triumpho, // 1: 26/01 17h
+            db.simoes,   // 2: 27/01 05h
+            db.dan,      // 3: 27/01 17h
+            db.lacerda,  // 4: 28/01 05h
+            db.simoes,   // 5: 28/01 17h
+            db.alacrino, // 6: 29/01 05h
+            db.lacerda,  // 7: 29/01 17h
+            db.triumpho, // 8: 30/01 05h
+            db.alacrino  // 9: 30/01 17h
+        ];
+
+        // Referência Inicial: 26/01/2026 às 05:00 (Início do Dan)
+        const dataReferencia = new Date(2026, 0, 26, 5, 0, 0);
+
+        function criarCard(p, isPlantao = false) {
+            return `
+                <div class="card ${isPlantao ? 'card-plantao' : ''}">
+                    ${isPlantao ? '<div class="badge">EM SERVIÇO AGORA</div>' : ''}
+                    <div class="profile-pic"><img src="${p.foto}"></div>
+                    <h2>${p.posto} <strong>${p.nome}</strong></h2>
+                    <div class="contact-info">
+                        <p>Cel.: ${p.cel}</p>
+                        <a href="https://wa.me/${p.wa}" class="sap__cor__verde">Chamar no WhatsApp</a>
+                    </div>
+                    <div class="social-links">
+                        <a class="apresentacao__links__link" href="mailto:rumb2upp19bpm@outlook.com"><img src="img/carta.png">E-mail RUMB</a>
+                    </div>
+                </div>`;
+        }
+
+        function obterPlantonista(dataAlvo) {
+            const diffMs = dataAlvo - dataReferencia;
+            const blocos12h = Math.floor(diffMs / (12 * 60 * 60 * 1000));
+            
+            // Lógica circular para 10 turnos
+            const n = sequenciaEscala.length;
+            const index = ((blocos12h % n) + n) % n;
+            return sequenciaEscala[index];
+        }
+
+        function atualizarPagina() {
+            const agora = new Date();
+            const plantonista = obterPlantonista(agora);
+            document.getElementById('container-plantao').innerHTML = criarCard(plantonista, true);
+            
+            const listaFixa = [db.dan, db.alacrino, db.simoes, db.lacerda, db.triumpho];
+            document.getElementById('lista-geral').innerHTML = listaFixa.map(p => criarCard(p)).join('');
+        }
+
+        function consultarEscala() {
+            const inputData = document.getElementById('data-consulta').value;
+            const display = document.getElementById('resultado-busca');
+            
+            if (!inputData) {
+                alert("Escolha uma data e horário!");
+                return;
+            }
+
+            const dataAlvo = new Date(inputData);
+            const policial = obterPlantonista(dataAlvo);
+
+            display.style.display = "block";
+            display.innerHTML = `
+                <p style="margin: 0; font-size: 14px;">Plantonista previsto:</p>
+                <div style="font-weight:bold; font-size:18px; color: #00a4e4; margin-top: 5px;">
+                    ${policial.posto} ${policial.nome}
+                </div>
+            `;
+        }
+
+        atualizarPagina();
+        setInterval(atualizarPagina, 60000); 
+    </script>
+</body>
+</html>

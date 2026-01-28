@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de MATERIAIS da RUMB</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Adicionando esta linha no HTML -->
+<p id="no-results" style="display: none;">Nenhum nome encontrado.</p>
+</head>
+<body>
+    
+
+<div><h1 align="center"><img src="caveira-armada.png" alt="Foto da Caveira Armada" class="logo">Lista dos Materiais da RUMB - 3ª UPP/19ºBPM - CIA UPP PAVÃO</h1></div>
+
+
+<br>
+<br>
+    <div class="search-container"><strong>Busca por Materiais:</strong>
+        <input type="text" id="search-input" placeholder="Digite o número de série do Material que deseja buscar...">
+    </div>
+
+    <ul id="name-list">
+
+        <li data-id="colete-355534"><img src="colete2.jpg" alt="COLETE" class="profile-pic">
+	<span class="material-text">COLETE SERIAL: 355534 - NÚMERO PEQUENO P - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:396 - Nº01</span>
+<div class="anotacoes">
+    	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+
+<li data-id="colete-351218"><img src="colete.jpg" alt="COLETE" class="profile-pic">
+	<span class="material-text">COLETE SERIAL: 351218 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº01</span>
+<div class="anotacoes">
+    	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+
+
+        <li data-id="colete-351027"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351027 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº02
+<div class="anotacoes">
+    	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351026"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351026 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº03
+<div class="anotacoes">
+    	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351275"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351275 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº04
+	<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351253"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351253 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº05
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351333"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351333 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº06
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351324"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351324 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº07
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-350788"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 350788 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº08
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351268"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351268 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº09
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351241"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351241 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº10
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-350834"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 350834 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº11
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351304"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351304 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº12
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351252"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351252 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº13
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351270"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351270 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº14
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351193"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351193 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº15
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351286"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351286 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº16
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351325"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351325 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº17
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351329"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351329 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº18
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351287"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351287 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº19
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-350838"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 350838 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº20
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351271"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351271 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº21
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351240"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351240 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº22
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351219"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351219 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº23
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-351225"><img src="colete.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 351225 - NÚMERO MÉDIO M - MODELO:GB52/09 - FABRICAÇÃO:02/2019 - VALIDADE:02/2024 - LOTE:401 - Nº24
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-2763649"><img src="colete3.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 2763649 - NÚMERO GRANDE G - MODELO:002/13 - FABRICAÇÃO:01/2019 - VALIDADE:01/2024 - LOTE:102730 - Nº01
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-2763385"><img src="colete3.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 2763385 - NÚMERO GRANDE G - MODELO:002/13 - FABRICAÇÃO:01/2019 - VALIDADE:01/2024 - LOTE:102730 - Nº02
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-2764642"><img src="colete3.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 2764642 - NÚMERO GRANDE G - MODELO:002/13 - FABRICAÇÃO:01/2019 - VALIDADE:01/2024 - LOTE:102730 - Nº03
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-2763402"><img src="colete3.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 2763402 - NÚMERO GRANDE G - MODELO:002/13 - FABRICAÇÃO:01/2019 - VALIDADE:01/2024 - LOTE:102730 - Nº04
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-2763411"><img src="colete3.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 2763411 - NÚMERO GRANDE G - MODELO:002/13 - FABRICAÇÃO:01/2019 - VALIDADE:01/2024 - LOTE:102730 - Nº05
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-2763673"><img src="colete3.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 2763673 - NÚMERO GRANDE G - MODELO:002/13 - FABRICAÇÃO:01/2019 - VALIDADE:01/2024 - LOTE:102730 - Nº06
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="colete-2763674"><img src="colete3.jpg" alt="COLETE" class="profile-pic">COLETE SERIAL: 2763674 - NÚMERO GRANDE G - MODELO:002/13 - FABRICAÇÃO:01/2019 - VALIDADE:01/2024 - LOTE:102730 - Nº07
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+        <li data-id="Colt-A0142649"><img src="colt_556.jpg" alt="COLT" class="profile-pic">FUZIL COLT 5.56 SERIAL: A0142649 - U.S.A - Nº01
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+        <li data-id="Colt-A0142767"><img src="colt_556.jpg" alt="COLT" class="profile-pic">FUZIL COLT 5.56 SERIAL: A0142767 - U.S.A - Nº02
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+        <li data-id="Colt-A0142858"><img src="colt_556.jpg" alt="COLT" class="profile-pic">FUZIL COLT 5.56 SERIAL: A0142858 - U.S.A - Nº03
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+        <li data-id="Colt-A0142033"><img src="colt_556.jpg" alt="COLT" class="profile-pic">FUZIL COLT 5.56 SERIAL: A0142033 - U.S.A - Nº04
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+        <li data-id="Colt-A0141955"><img src="colt_556.jpg" alt="COLT" class="profile-pic">FUZIL COLT 5.56 SERIAL: A0141955 - U.S.A - Nº05
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+
+        <li data-id="Colt-A014XXXX"><img src="colt_556.jpg" alt="COLT" class="profile-pic">FUZIL COLT 5.56 SERIAL: XXXXXX - U.S.A - Nº06
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>
+
+        <li><img src="ia2_fuzil_556.jpg" alt="IMBEL-IA2" class="profile-pic">CARABINA IMBEL-IA2 5.56 SERIAL: BRA11433 - B.R - Nº01
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+        <li><img src="ia2_fuzil_556.jpg" alt="IMBEL-IA2" class="profile-pic">CARABINA IMBEL-IA2 5.56 SERIAL: BRA11536 - B.R - Nº02
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+        <li><img src="ia2_fuzil_556.jpg" alt="IMBEL-IA2" class="profile-pic">CARABINA IMBEL-IA2 5.56 SERIAL: BRA10922 - B.R - Nº03
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+        <li><img src="ia2_fuzil_556.jpg" alt="IMBEL-IA2" class="profile-pic">CARABINA IMBEL-IA2 5.56 SERIAL: JFA07923 - B.R - Nº04
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+
+
+                <li><img src="762_cano_curto_serrado.png" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 CURTO SERIAL: AJA04445 - B.R - Nº01
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_curto_serrado.png" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 CURTO SERIAL: AJA04260 - B.R - Nº02
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_curto_serrado.png" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 CURTO SERIAL: 132139 - B.R - Nº03
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 278656 - B.R - Nº01
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: AHA04155 - B.R - Nº02
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 155093 - B.R - Nº03
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 136710 - B.R - Nº04
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 277150 - B.R - Nº05
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 135021 - B.R - Nº06
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 135864 - B.R - Nº07
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 155084 - B.R - Nº08
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 21225 - B.R - Nº09
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 28777 - B.R - Nº10
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: AHA04141 - B.R - Nº11
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: AJA04163 PÉSSIMO - B.R - Nº12
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 21142 - B.R - Nº13
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 21158 - B.R - Nº14
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: AHA04135 - B.R - Nº15
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_longo_serrado.jpg" alt="7.62" class="profile-pic">FUZIL IMBEL 7.62 LONGO SERIAL: 279067 COM DEFEITO - B.R - Nº16
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+
+                <li><img src="762_cano_curto_serrado.png" alt="7.62" class="profile-pic">CARABINA IMBEL 12 SERIAL: SEPM-00398G - B.R - Nº01
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                <li><img src="762_cano_curto_serrado.png" alt="7.62" class="profile-pic">CARABINA IMBEL 12 SERIAL: L996227 - B.R - Nº02
+<div class="anotacoes">
+	<input type="text" placeholder="Nome">
+    	<input type="date">
+    	<input type="text" placeholder="Observação">
+    	<button onclick="salvar(this)">Salvar</button>
+  	</div>
+</li>  
+                </ul>
+
+          <div class="footer"><footer>- Direitos reservados a RUMB webdesign -</footer></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+
+
+
+

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Material RUMB</title>
+    <style>
+        :root {
+            --azul-pmerj: #0b2c4d;
+            --azul-claro: #1f4f82;
+            --cinza-fundo: #f4f7f6;
+            --branco: #ffffff;
+            --vermelho: #d9534f;
+            --verde: #5cb85c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--cinza-fundo);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: var(--azul-pmerj);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .info-section {
+            display: flex;
+            gap: 20px;
+            background: var(--branco);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .info-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        input[type="text"], input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            background: var(--branco);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th {
+            background-color: var(--azul-claro);
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 10px 5px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .col-desc { text-align: left; padding-left: 15px; width: 200px; }
+        .col-input { width: 80px; }
+        
+        input.input-contagem {
+            text-align: center;
+            border: 1px solid #ddd;
+            background-color: #fff9e6;
+        }
+
+        .status-faltando {
+            font-weight: bold;
+            color: var(--vermelho);
+        }
+
+        .status-ok {
+            background-color: #e8f5e9 !important;
+            color: #2e7d32;
+        }
+
+        .status-erro {
+            background-color: #ffebee !important;
+            color: #c62828;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn-print {
+            background-color: var(--azul-pmerj);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-print:hover { background-color: #154675; }
+
+        @print {
+            .btn-container, .input-contagem { border: none !important; }
+            input { border: none !important; }
+        }
+
+.logo {
+    width: 80px;
+    align-items: center;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><img src="caveira-dourada.png" alt="Foto da Caveira Armada" class="logo">CONTAGEM DIÁRIA RUMB <img src="caveira-dourada.png" alt="Foto da Caveira Armada" class="logo"></h1>
+    <p>Setor de Material e Cautela</p>
+</header>
+
+<div class="container">
+    <div class="info-section">
+        <div class="info-group">
+            <label>Data da Contagem:</label>
+            <input type="date" id="dataAtual">
+        </div>
+        <div class="info-group">
+            <label>Responsável pela Contagem:</label>
+            <input type="text" placeholder="Nome do Responsável">
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table id="tabelaContagem">
+            <thead>
+                <tr>
+                    <th>Cód</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Qtd Inicial</th>
+                    <th>RUMB</th>
+                    <th>Ordinário</th>
+                    <th>RAS</th>
+                    <th>PROEIS</th>
+                    <th>Perm.</th>
+                    <th>Faltando</th>
+                    <th>Total Atual</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabela">
+                </tbody>
+        </table>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn-print" onclick="window.print()">Imprimir Relatório / Salvar PDF</button>
+    </div>
+</div>
+
+<script>
+    // Dados baseados no seu arquivo Excel
+    const materiais = [
+        { cod: "001", desc: "Pistolas", cat: "Arma Curta", inicial: 14 },
+        { cod: "002", desc: "Carregadores de Pistolas", cat: "Munição", inicial: 26 },
+        { cod: "003", desc: "Fuzil", cat: "Arma Longa", inicial: 33 },
+        { cod: "004", desc: "Carregadores de Fuzil", cat: "Munição", inicial: 61 },
+        { cod: "005", desc: "Colete Balístico", cat: "Equipamentos", inicial: 47 },
+        { cod: "006", desc: "Rádio Portátil", cat: "Comunicador", inicial: 11 },
+        { cod: "007", desc: "Granadas", cat: "Efeito moral", inicial: 7 },
+        { cod: "008", desc: "Taser", cat: "Neutralizador", inicial: 4 },
+	{ cod: "009", desc: "Dardos", cat: "Neutralizador", inicial: 2 },
+        { cod: "010", desc: "Spray Pimenta", cat: "Efeito moral", inicial: 10 },
+        { cod: "011", desc: "Tonfa", cat: "Outros", inicial: 10 },
+        { cod: "012", desc: "Câmeras", cat: "Equipamento", inicial: 92 },
+	{ cod: "013", desc: "Baterias", cat: "Equipamento", inicial: 48 }
+        
+    ];
+
+    const corpoTabela = document.getElementById('corpoTabela');
+
+    function renderizarTabela() {
+        materiais.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${item.cod}</td>
+                <td class="col-desc">${item.desc}</td>
+                <td>${item.cat}</td>
+                <td><strong>${item.inicial}</strong></td>
+                <td class="col-input"><input type="number" class="input-contagem" value="0" min="0" oninput="calcular(${index})" id="rumb-${index}"></td>
+                <td class="col-input"><input type="number" class="input-contagem" value="0" min="0" oninput="calcular(${index})" id="ord-${index}"></td>
+                <td class="col-input"><input type="number" class="input-contagem" value="0" min="0" oninput="calcular(${index})" id="ras-${index}"></td>
+                <td class="col-input"><input type="number" class="input-contagem" value="0" min="0" oninput="calcular(${index})" id="proeis-${index}"></td>
+                <td class="col-input"><input type="number" class="input-contagem" value="0" min="0" oninput="calcular(${index})" id="perm-${index}"></td>
+                <td id="falta-${index}" class="status-faltando">${item.inicial}</td>
+                <td id="total-${index}">0</td>
+            `;
+            corpoTabela.appendChild(tr);
+        });
+    }
+
+    function calcular(idx) {
+        const inicial = materiais[idx].inicial;
+        const rumb = parseInt(document.getElementById(`rumb-${idx}`).value) || 0;
+        const ord = parseInt(document.getElementById(`ord-${idx}`).value) || 0;
+        const ras = parseInt(document.getElementById(`ras-${idx}`).value) || 0;
+        const proeis = parseInt(document.getElementById(`proeis-${idx}`).value) || 0;
+        const perm = parseInt(document.getElementById(`perm-${idx}`).value) || 0;
+
+        const totalAtual = rumb + ord + ras + proeis + perm;
+        const falta = inicial - totalAtual;
+
+        const cellTotal = document.getElementById(`total-${idx}`);
+        const cellFalta = document.getElementById(`falta-${idx}`);
+
+        cellTotal.innerText = totalAtual;
+        cellFalta.innerText = falta;
+
+        // Feedback visual
+        if (falta === 0) {
+            cellFalta.parentElement.className = "status-ok";
+        } else if (falta > 0) {
+            cellFalta.parentElement.className = "status-erro";
+        } else {
+            cellFalta.parentElement.className = ""; // Caso de excesso
+        }
+    }
+
+    // Set data de hoje
+    document.getElementById('dataAtual').valueAsDate = new Date();
+
+    renderizarTabela();
+</script>
+
+</body>
+</html>
